@@ -98,8 +98,13 @@ do
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ' '
 
+  vim.g.loaded_netrw = 1
+  vim.g.loaded_netrwPlugin = 1
+
+  vim.opt.termguicolors = true
+
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -166,6 +171,15 @@ do
 
   -- Minimal number of screen lines to keep above and below the cursor.
   vim.o.scrolloff = 10
+
+  vim.filetype.add {
+    extension = {
+      gohtml = 'gotmpl',
+    },
+    extensions = {
+      templ = 'templ',
+    },
+  }
 
   -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
   -- instead raise a dialog asking if you wish to save the current file(s)
@@ -346,6 +360,10 @@ do
   -- Here we only install `nvim-web-devicons` (which adds pretty icons) if we have a Nerd Font,
   -- since otherwise the icons won't display properly.
   if vim.g.have_nerd_font then vim.pack.add { gh 'nvim-tree/nvim-web-devicons' } end
+
+  vim.pack.add { gh 'nvim-tree/nvim-tree.lua' }
+  require('nvim-tree').setup()
+  vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle Nvim Tree' })
 
   -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
   --
@@ -687,15 +705,20 @@ do
   ---@type table<string, vim.lsp.Config>
   local servers = {
     -- clangd = {},
-    -- gopls = {},
+    gopls = {},
     -- pyright = {},
     -- rust_analyzer = {},
-    --
+    angularls = {},
+    tailwindcss = {},
+    postgres_lsp = {},
+    yamlls = {},
+    templ = {},
+
     -- Some languages (like typescript) have entire language plugins that can be useful:
     --    https://github.com/pmizio/typescript-tools.nvim
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
-    -- ts_ls = {},
+    ts_ls = {},
 
     stylua = {}, -- Used to format Lua code
 
@@ -776,7 +799,13 @@ do
     format_on_save = function(bufnr)
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
-        -- lua = true,
+        lua = true,
+        go = true,
+        typescript = true,
+        html = true,
+        typescriptreact = true,
+        htmlangular = true,
+        sql = true,
         -- python = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
