@@ -172,6 +172,9 @@ do
   -- Minimal number of screen lines to keep above and below the cursor.
   vim.o.scrolloff = 10
 
+  vim.o.tabstop = 4
+  vim.o.shiftwidth = 4
+
   vim.filetype.add {
     extension = {
       gohtml = 'gotmpl',
@@ -188,6 +191,10 @@ do
 
   -- [[ Basic Keymaps ]]
   --  See `:help vim.keymap.set()`
+
+  vim.keymap.set('n', '<leader>ba', ':%bd<CR>', { desc = 'Close all buffers' })
+  vim.keymap.set('n', '<leader>bo', ':%bd|e#|bd#<CR>', { desc = 'Close all buffers except current' })
+  vim.keymap.set('n', '<leader>e', ':lua vim.diagnostic.open_float()<CR>', { desc = 'View diagnostic [e]rror' })
 
   -- Clear highlights on search when pressing <Esc> in normal mode
   --  See `:help hlsearch`
@@ -361,9 +368,15 @@ do
   -- since otherwise the icons won't display properly.
   if vim.g.have_nerd_font then vim.pack.add { gh 'nvim-tree/nvim-web-devicons' } end
 
+  local config = {
+    view = {
+      width = 60,
+    },
+  }
+
   vim.pack.add { gh 'nvim-tree/nvim-tree.lua' }
-  require('nvim-tree').setup()
-  vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle Nvim Tree' })
+  require('nvim-tree').setup(config)
+  vim.keymap.set('n', '\\', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle Nvim Tree' })
 
   -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
   --
@@ -806,6 +819,7 @@ do
         typescriptreact = true,
         htmlangular = true,
         sql = true,
+        css = true,
         -- python = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
@@ -819,6 +833,13 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
+      html = { 'prettierd' },
+      css = { 'prettierd' },
+      typescript = { 'prettierd' },
+      typescriptreact = { 'prettierd' },
+      htmlangular = { 'prettierd' },
+      go = { 'gofmt' },
+      sql = { 'sqlfmt' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
