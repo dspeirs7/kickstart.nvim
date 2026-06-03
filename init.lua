@@ -194,7 +194,6 @@ do
 
   vim.keymap.set('n', '<leader>ba', ':%bd<CR>', { desc = 'Close all buffers' })
   vim.keymap.set('n', '<leader>bo', ':%bd|e#|bd#<CR>', { desc = 'Close all buffers except current' })
-  vim.keymap.set('n', '<leader>e', ':lua vim.diagnostic.open_float()<CR>', { desc = 'View diagnostic [e]rror' })
 
   -- Clear highlights on search when pressing <Esc> in normal mode
   --  See `:help hlsearch`
@@ -724,6 +723,7 @@ do
     angularls = {},
     tailwindcss = {},
     postgres_lsp = {},
+    sqlfmt = {},
     yamlls = {},
     templ = {},
 
@@ -814,6 +814,7 @@ do
       local enabled_filetypes = {
         lua = true,
         go = true,
+        javascript = true,
         typescript = true,
         html = true,
         typescriptreact = true,
@@ -835,6 +836,7 @@ do
     formatters_by_ft = {
       html = { 'prettierd' },
       css = { 'prettierd' },
+      javascript = { 'prettierd' },
       typescript = { 'prettierd' },
       typescriptreact = { 'prettierd' },
       htmlangular = { 'prettierd' },
