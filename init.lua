@@ -367,15 +367,15 @@ do
   -- since otherwise the icons won't display properly.
   if vim.g.have_nerd_font then vim.pack.add { gh 'nvim-tree/nvim-web-devicons' } end
 
-  local config = {
-    view = {
-      width = 60,
-    },
-  }
+  -- local config = {
+  --   view = {
+  --     width = 60,
+  --   },
+  -- }
 
-  vim.pack.add { gh 'nvim-tree/nvim-tree.lua' }
-  require('nvim-tree').setup(config)
-  vim.keymap.set('n', '\\', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle Nvim Tree' })
+  -- vim.pack.add { gh 'nvim-tree/nvim-tree.lua' }
+  -- require('nvim-tree').setup(config)
+  -- vim.keymap.set('n', '\\', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle Nvim Tree' })
 
   -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
   --
@@ -731,7 +731,8 @@ do
     --    https://github.com/pmizio/typescript-tools.nvim
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
-    ts_ls = {},
+    -- ts_ls = {},
+    vtsls = {},
 
     stylua = {}, -- Used to format Lua code
 
@@ -1013,12 +1014,12 @@ do
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug'
-  -- require 'kickstart.plugins.indent_line'
-  -- require 'kickstart.plugins.lint'
-  -- require 'kickstart.plugins.autopairs'
-  -- require 'kickstart.plugins.neo-tree'
-  -- require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
+  require 'kickstart.plugins.debug'
+  require 'kickstart.plugins.indent_line'
+  require 'kickstart.plugins.lint'
+  require 'kickstart.plugins.autopairs'
+  require 'kickstart.plugins.neo-tree'
+  require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
 
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --
