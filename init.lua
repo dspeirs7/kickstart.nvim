@@ -367,6 +367,11 @@ do
   -- since otherwise the icons won't display properly.
   if vim.g.have_nerd_font then vim.pack.add { gh 'nvim-tree/nvim-web-devicons' } end
 
+  vim.pack.add { gh 'MeanderingProgrammer/render-markdown.nvim' }
+  require('render-markdown').setup {
+    completions = { lsp = { enabled = true } },
+  }
+
   -- local config = {
   --   view = {
   --     width = 60,
@@ -817,6 +822,8 @@ do
         go = true,
         javascript = true,
         typescript = true,
+        vue = true,
+        markdown = true,
         html = true,
         typescriptreact = true,
         htmlangular = true,
@@ -839,6 +846,8 @@ do
       css = { 'prettierd' },
       javascript = { 'prettierd' },
       typescript = { 'prettierd' },
+      vue = { 'prettierd' },
+      markdown = { 'prettierd' },
       typescriptreact = { 'prettierd' },
       htmlangular = { 'prettierd' },
       go = { 'gofmt' },

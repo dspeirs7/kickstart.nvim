@@ -26,7 +26,6 @@ require('neo-tree').setup {
     window = {
       mappings = {
         ['\\'] = 'close_window',
-        ['<CR>'] = 'open_tabnew',
       },
     },
   },
