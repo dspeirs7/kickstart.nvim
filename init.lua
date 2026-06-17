@@ -370,6 +370,7 @@ do
   vim.pack.add { gh 'MeanderingProgrammer/render-markdown.nvim' }
   require('render-markdown').setup {
     completions = { lsp = { enabled = true } },
+    latex = { enabled = false },
   }
 
   -- local config = {
@@ -459,7 +460,7 @@ do
   -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
   -- - sd'   - [S]urround [D]elete [']quotes
   -- - sr)'  - [S]urround [R]eplace [)] [']
-  require('mini.surround').setup()
+  require('mini.surround').setup {}
 
   -- Simple and easy statusline.
   --  You could remove this setup call if you don't like it,
@@ -551,6 +552,19 @@ do
   vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
   vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+  vim.pack.add { gh 'WilliamHsieh/overlook.nvim' }
+  -- require('overlook').setup {}
+  vim.keymap.set('n', '<leader>pd', require('overlook.api').peek_definition, { desc = 'Peek definition' })
+  vim.keymap.set('n', '<leader>pp', require('overlook.api').peek_cursor, { desc = 'Peek cursor' })
+  vim.keymap.set('n', '<leader>pu', require('overlook.api').restore_popup, { desc = 'Restore last popup' })
+  vim.keymap.set('n', '<leader>pU', require('overlook.api').restore_all_popups, { desc = 'Restore all popups' })
+  vim.keymap.set('n', '<leader>pc', require('overlook.api').close_all, { desc = 'Close all popups' })
+  vim.keymap.set('n', '<leader>pf', require('overlook.api').switch_focus, { desc = 'Switch focus' })
+  vim.keymap.set('n', '<leader>ps', require('overlook.api').open_in_split, { desc = 'Open popup in split' })
+  vim.keymap.set('n', '<leader>pv', require('overlook.api').open_in_vsplit, { desc = 'Open popup in vsplit' })
+  vim.keymap.set('n', '<leader>pt', require('overlook.api').open_in_tab, { desc = 'Open popup in tab' })
+  vim.keymap.set('n', '<leader>po', require('overlook.api').open_in_original_window, { desc = 'Open popup in current window' })
 
   -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
   -- If you later switch picker plugins, this is where to update these mappings.
