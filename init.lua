@@ -175,6 +175,16 @@ do
   vim.o.tabstop = 4
   vim.o.shiftwidth = 4
 
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'javascript', 'typescript', 'json' },
+    callback = function()
+      vim.opt_local.tabstop = 2
+      vim.opt_local.shiftwidth = 2
+      vim.opt_local.softtabstop = 2
+      vim.opt_local.expandtab = true
+    end,
+  })
+
   vim.filetype.add {
     extension = {
       gohtml = 'gotmpl',
