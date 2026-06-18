@@ -192,8 +192,8 @@ do
   -- [[ Basic Keymaps ]]
   --  See `:help vim.keymap.set()`
 
-  vim.keymap.set('n', '<leader>ba', ':%bd<CR>', { desc = 'Close all buffers' })
-  vim.keymap.set('n', '<leader>bo', ':%bd|e#|bd#<CR>', { desc = 'Close all buffers except current' })
+  vim.keymap.set('n', '<leader>da', ':%bd<CR>', { desc = 'Close all buffers' })
+  vim.keymap.set('n', '<leader>do', ':%bd|e#|bd#<CR>', { desc = 'Close all buffers except current' })
 
   -- Clear highlights on search when pressing <Esc> in normal mode
   --  See `:help hlsearch`
@@ -304,6 +304,8 @@ do
     end
   end
 
+  vim.api.nvim_create_user_command('PackUpdate', function() vim.pack.update() end, {})
+
   -- This autocommand runs after a plugin is installed or updated and
   --  runs the appropriate build command for that plugin if necessary.
   --
@@ -372,16 +374,6 @@ do
     completions = { lsp = { enabled = true } },
     latex = { enabled = false },
   }
-
-  -- local config = {
-  --   view = {
-  --     width = 60,
-  --   },
-  -- }
-
-  -- vim.pack.add { gh 'nvim-tree/nvim-tree.lua' }
-  -- require('nvim-tree').setup(config)
-  -- vim.keymap.set('n', '\\', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle Nvim Tree' })
 
   -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
   --
@@ -1047,7 +1039,7 @@ do
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- require 'custom.plugins'
+  require 'custom.plugins'
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
