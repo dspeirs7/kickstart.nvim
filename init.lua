@@ -379,6 +379,8 @@ do
   -- since otherwise the icons won't display properly.
   if vim.g.have_nerd_font then vim.pack.add { gh 'nvim-tree/nvim-web-devicons' } end
 
+  vim.cmd [[packadd markdown-preview.nvim]]
+
   vim.pack.add { gh 'MeanderingProgrammer/render-markdown.nvim' }
   require('render-markdown').setup {
     completions = { lsp = { enabled = true } },
@@ -845,6 +847,7 @@ do
         htmlangular = true,
         sql = true,
         css = true,
+        json = true,
         -- python = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
@@ -868,6 +871,7 @@ do
       htmlangular = { 'prettierd' },
       go = { 'gofmt' },
       sql = { 'sqlfmt' },
+      json = { 'prettierd' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
@@ -976,7 +980,8 @@ do
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
   -- Ensure basic parsers are installed
-  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+  local parsers =
+    { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'angular', 'typescript', 'javascript' }
   require('nvim-treesitter').install(parsers)
 
   ---@param buf integer
