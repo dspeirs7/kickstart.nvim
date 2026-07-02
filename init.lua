@@ -379,13 +379,13 @@ do
   -- since otherwise the icons won't display properly.
   if vim.g.have_nerd_font then vim.pack.add { gh 'nvim-tree/nvim-web-devicons' } end
 
-  vim.cmd [[packadd markdown-preview.nvim]]
+  vim.pack.add { gh 'OXY2DEV/markview.nvim' }
 
-  vim.pack.add { gh 'MeanderingProgrammer/render-markdown.nvim' }
-  require('render-markdown').setup {
-    completions = { lsp = { enabled = true } },
-    latex = { enabled = false },
-  }
+  if vim.g.have_nard_font then require('markview').setup {
+    preview = {
+      icon_provider = 'devicons',
+    },
+  } end
 
   -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
   --
@@ -745,7 +745,26 @@ do
     -- rust_analyzer = {},
     angularls = {},
     tailwindcss = {},
-    postgres_lsp = {},
+    postgres_lsp = {
+      handlers = {
+        ['textDocument/publishDiagnostics'] = function(err, result, ctx, config)
+          -- If there are no diagnostics, let the default handler pass it safely
+          if not result or not result.diagnostics then return vim.lsp.handlers['textDocument/publishDiagnostics'](err, result, ctx, config) end
+
+          local filtered_diagnostics = {}
+          for _, diagnostic in ipairs(result.diagnostics) do
+            -- Match "sqlc" case-insensitively to catch "sqlc.embed" syntax errors
+            if not string.match(diagnostic.message:lower(), 'sqlc') then table.insert(filtered_diagnostics, diagnostic) end
+          end
+
+          -- Overwrite the payload with filtered diagnostics
+          result.diagnostics = filtered_diagnostics
+
+          -- Pass the cleaned results to Neovim's default diagnostic handler
+          vim.lsp.handlers['textDocument/publishDiagnostics'](err, result, ctx, config)
+        end,
+      },
+    },
     sqlfmt = {},
     yamlls = {},
     templ = {},
@@ -861,17 +880,17 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
-      html = { 'prettierd' },
-      css = { 'prettierd' },
-      javascript = { 'prettierd' },
-      typescript = { 'prettierd' },
-      vue = { 'prettierd' },
-      markdown = { 'prettierd' },
-      typescriptreact = { 'prettierd' },
-      htmlangular = { 'prettierd' },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
+      vue = { 'prettierd', 'prettier', stop_after_first = true },
+      markdown = { 'prettierd', 'prettier', stop_after_first = true },
+      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      htmlangular = { 'prettierd', 'prettier', stop_after_first = true },
       go = { 'gofmt' },
       sql = { 'sqlfmt' },
-      json = { 'prettierd' },
+      json = { 'prettierd', 'prettier', stop_after_first = true },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
